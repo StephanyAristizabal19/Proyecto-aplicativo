@@ -1,5 +1,36 @@
 import tkinter as tk
 from tkinter import messagebox
+import matplotlib.pyplot as plt
+import numpy as np
+import requests
+
+
+API_KEY = "3dc16e924fe5d0f038703fa200f95998"
+
+
+def get_weather_data(ciudades):
+    datos_ciudades = []  
+    
+    for ciudad in ciudades:
+        try:
+            url = f"http://api.openweathermap.org/data/2.5/weather?q={ciudad}&appid={API_KEY}&units=metric"
+            response = requests.get(url)
+            response.raise_for_status()
+            
+        
+            datos = response.json()
+            temperatura_actual = datos['main']['temp']
+            sensacion_termica = datos['main']['feels_like']
+            temp_maxima = datos['main']['temp_max']
+            temp_minima = datos['main']['temp_min']
+            humedad = datos['main']['humidity']
+            
+            datos_ciudades.append((ciudad, temperatura_actual, sensacion_termica, temp_maxima, temp_minima, humedad))
+        except requests.exceptions.RequestException as e:
+            messagebox.showerror("Error de Conexión", f"No se pudo obtener los datos para la ciudad {ciudad}. Error: {str(e)}")
+    
+    return datos_ciudades
+
 
 root = tk.Tk()
 root.title("Consulta de Clima")
