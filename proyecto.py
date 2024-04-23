@@ -3,6 +3,7 @@ from tkinter import messagebox
 import matplotlib.pyplot as plt
 import numpy as np
 import requests
+import pandas as pd
 
 
 API_KEY = "3dc16e924fe5d0f038703fa200f95998"
@@ -31,6 +32,16 @@ def get_weather_data(ciudades):
     
     return datos_ciudades
 
+def get_climate_info(ciudad, temperatura_actual, sensacion_termica, temp_maxima, temp_minima, humedad):
+    info_clima = (
+        f"Datos para la ciudad de {ciudad}:\n\n"
+        f"Temperatura actual: {temperatura_actual}°C\n"
+        f"Sensación térmica: {sensacion_termica}°C\n"
+        f"Temperatura máxima: {temp_maxima}°C\n"
+        f"Temperatura mínima: {temp_minima}°C\n"
+        f"Humedad: {humedad}%"
+    )
+    return info_clima
 
 root = tk.Tk()
 root.title("Consulta de Clima")
