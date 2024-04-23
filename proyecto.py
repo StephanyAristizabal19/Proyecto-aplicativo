@@ -43,6 +43,25 @@ def get_climate_info(ciudad, temperatura_actual, sensacion_termica, temp_maxima,
     )
     return info_clima
 
+def show_weather_data(ciudad):
+    data = get_weather_data([ciudad])[0]
+    info_clima = get_climate_info(*data)
+    messagebox.showinfo(f"Información del Clima - {ciudad}", info_clima)
+    plot_weather_data(*data)
+    
+
+def plot_weather_data(ciudad, temperatura_actual, sensacion_termica, temp_maxima, temp_minima, humedad):
+    plt.figure(figsize=(9, 10))
+    plt.bar(['Temperatura Actual', 'Sensación Térmica', 'Temperatura Máxima', 'Temperatura Mínima', 'Humedad'], 
+            [temperatura_actual, sensacion_termica, temp_maxima, temp_minima, humedad], 
+            color=['skyblue', 'coral', 'orange', 'yellow', 'lightgreen'])
+    plt.xlabel('Variables Climáticas')
+    plt.ylabel('Valor')
+    plt.title(f'Datos Climáticos para {ciudad}')
+    plt.xticks(rotation=45)
+    plt.grid(True)
+    plt.show()
+
 root = tk.Tk()
 root.title("Consulta de Clima")
 root.geometry("400x150")
